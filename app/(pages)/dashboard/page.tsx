@@ -5,17 +5,18 @@ import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const router = useRouter();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
     try {
-      let res = await fetch("http://localhost:8081/api/v1/admin/dashboard", {
+      let res = await fetch(`${API_URL}/api/v1/admin/dashboard`, {
         credentials: "include",
       });
 
       if (res.status === 401) {
         const refreshRes = await fetch(
-          "http://localhost:8081/api/v1/admin/refresh",
+          `${API_URL}/api/v1/admin/refresh`,
           {
             method: "POST",
             credentials: "include",
@@ -27,7 +28,7 @@ const Dashboard = () => {
           return;
         }
 
-        res = await fetch("http://localhost:8081/api/v1/admin/dashboard", {
+        res = await fetch(`${API_URL}/api/v1/admin/dashboard`, {
           credentials: "include",
         });
       }
@@ -49,7 +50,7 @@ const Dashboard = () => {
   }, []);
 
   const handleLogout = async () => {
-    await fetch("http://localhost:8081/api/v1/admin/logout", {
+    await fetch(`${API_URL}/api/v1/admin/logout`, {
       method: "POST",
       credentials: "include",
     });

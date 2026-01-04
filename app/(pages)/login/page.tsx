@@ -7,6 +7,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const Login = () => {
   const router = useRouter();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +23,7 @@ const Login = () => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-        const res = await fetch("http://localhost:8081/api/v1/admin/me", {
+        const res = await fetch(`${API_URL}/api/v1/admin/me`, {
           credentials: "include",
         });
 
@@ -52,7 +53,7 @@ const Login = () => {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:8081/api/v1/admin/login", {
+      const res = await fetch(`${API_URL}/api/v1/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
