@@ -1,9 +1,53 @@
-import React from 'react'
+"use client"
+import { useState } from "react";
+import { FaPlus } from "react-icons/fa6";
+import { IoSearch } from "react-icons/io5";
 
 const Gallery = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   return (
-    <div>Gallery</div>
-  )
-}
+    <div className="container mx-auto px-6 py-8">
+      <div data-testid="gallery-page" className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Design Gallery
+          </h2>
+          <button
+            // onClick={handleCreate}
+            className="flex items-center space-x-2 h-9 px-4 py-2 gap-2 bg-slate-900 hover:bg-slate-800 text-white justify-center rounded-md text-sm font-medium transition-colors cursor-pointer"
+          >
+            <FaPlus className="text-2.75 text-[#ffffffe3]" />
+            <span>Add New Design</span>
+          </button>
+        </div>
 
-export default Gallery
+        <div className="relative">
+          <IoSearch
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
+            size={20}
+          />
+          <input
+            data-testid="search-designs-input"
+            type="text"
+            placeholder="Search designs by title or description..."
+            // value={searchQuery}
+            // onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 h-12 border-slate-300   flex w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+          />
+        </div>
+        <div
+          data-testid="no-designs-message"
+          className="text-center py-12 bg-white rounded-lg border border-slate-200"
+        >
+          <p className="text-slate-600">
+            {searchQuery
+              ? "No designs found matching your search"
+              : "No designs yet. Create your first one!"}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Gallery;

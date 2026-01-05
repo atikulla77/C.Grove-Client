@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaRegEye, FaRegFolderOpen } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
-import { FiClock, FiLayers } from "react-icons/fi";
-import { IoImageOutline } from "react-icons/io5";
+import { FiClock, FiDownload, FiLayers } from "react-icons/fi";
+import { IoColorPaletteOutline, IoImageOutline } from "react-icons/io5";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -37,6 +37,36 @@ const Dashboard = () => {
       description: "Manage showcase",
       icon: FiLayers,
       onClick: () => router.push("/dashboard/portfolio"),
+    },
+  ];
+  const stats = [
+    {
+      label: 'Total Designs',
+      value: '156',
+      change: '+12 this week',
+      icon: IoColorPaletteOutline,
+      gradient: 'from-blue-500 to-cyan-500',
+    },
+    {
+      label: 'Active Projects',
+      value: '8',
+      change: '3 in progress',
+      icon: FaRegFolderOpen,
+      gradient: 'from-purple-500 to-pink-500',
+    },
+    {
+      label: 'Total Views',
+      value: '12.4K',
+      change: '+2.3K this month',
+      icon: FaRegEye,
+      gradient: 'from-orange-500 to-red-500',
+    },
+    {
+      label: 'Downloads',
+      value: '847',
+      change: '+127 this week',
+      icon: FiDownload,
+      gradient: 'from-green-500 to-emerald-500',
     },
   ];
   return (
@@ -85,11 +115,11 @@ const Dashboard = () => {
                       <h3 className="font-semibold text-[#00000A] mb-1">
                         {action.label}
                       </h3>
-                      <p className="text-sm text-[#00002D]">
+                      <p className="text-sm text-[#00002d9c]">
                         {action.description}
                       </p>
                     </div>
-                    <FaArrowRight className="w-4 text-[#000000]" />
+                    <FaArrowRight className="w-4 text-[#00002d9c]" />
                   </div>
                 </div>
               </div>
@@ -99,41 +129,41 @@ const Dashboard = () => {
       </section>
 
       {/* Stats Grid */}
-      {/* <section className="mb-12">
+      <section className="mb-12">
           <h3 className="text-2xl font-bold text-foreground mb-6">Overview</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
-                <Card
+                <div
                   key={index}
-                  className="border-border hover:shadow-lg transition-shadow"
+                  className="rounded-xl border border-[#00000024] text-[#00000A] shadow hover:shadow-lg transition-shadow"
                 >
-                  <CardContent className="p-6">
+                  <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div
-                        className={`p-3 rounded-xl bg-gradient-to-br ${stat.gradient} text-white`}
+                        className={`p-3 rounded-xl bg-linear-to-br ${stat.gradient} text-white`}
                       >
                         <Icon className="w-6 h-6" />
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm text-[#00002D] mb-1">
+                      <p className="text-sm text-[#00002d9c] mb-1">
                         {stat.label}
                       </p>
-                      <p className="text-3xl font-bold text-foreground mb-1">
+                      <p className="text-3xl font-bold text-[#00000A] mb-1">
                         {stat.value}
                       </p>
-                      <p className="text-xs text-[#00002D]">
+                      <p className="text-xs text-[#00002d9c]">
                         {stat.change}
                       </p>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>
-        </section> */}
+        </section>
 
       {/* Recent Designs */}
       {/* <section>

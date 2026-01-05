@@ -62,7 +62,7 @@ export default function RootLayout({
   if (checking) return null;
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-slate-50 min-h-screen">
       <DNavbar />
       <div className="mt-16">{children}</div>
     </div>
