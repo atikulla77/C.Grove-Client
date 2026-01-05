@@ -7,7 +7,7 @@ const Gallery = () => {
   const [searchQuery, setSearchQuery] = useState("");
   return (
     <div className="container mx-auto px-6 py-8">
-      <div data-testid="gallery-page" className="space-y-6">
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold text-slate-900">
             Design Gallery
@@ -27,7 +27,6 @@ const Gallery = () => {
             size={20}
           />
           <input
-            data-testid="search-designs-input"
             type="text"
             placeholder="Search designs by title or description..."
             // value={searchQuery}
@@ -36,7 +35,6 @@ const Gallery = () => {
           />
         </div>
         <div
-          data-testid="no-designs-message"
           className="text-center py-12 bg-white rounded-lg border border-slate-200"
         >
           <p className="text-slate-600">

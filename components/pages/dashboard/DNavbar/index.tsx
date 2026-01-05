@@ -19,7 +19,7 @@ const Navbar = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="w-full bg-white border-b border-slate-200 font-Inter fixed top-0 left-0">
+    <nav className="w-full bg-white border-b border-slate-200 font-Inter fixed top-0 left-0 z-9999">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-semibold text-slate-900 select-none cursor-pointer">
@@ -63,7 +63,6 @@ const Navbar = () => {
             </button>
 
             <button
-              data-testid="logout-button"
               onClick={handleLogout}
               className="flex items-center space-x-2 h-9 px-4 py-2 border border-slate-300 hover:bg-slate-100 justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
             >
