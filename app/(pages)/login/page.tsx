@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { toast } from "sonner"
 
 const Login = () => {
   const router = useRouter();
@@ -65,8 +66,10 @@ const Login = () => {
 
       router.replace("/dashboard"); // 🔥 replace here too
       setSuccess("Login successful");
+      toast.success("Login successful!");
     } catch (err: any) {
       setError(err.message || "Login failed");
+      toast.error(err.message || "Login failed");
     } finally {
       setLoginLoading(false);
     }
