@@ -60,11 +60,6 @@ const Login = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      // ✅ Optional: Store in localStorage as backup
-      if (data.accessToken) {
-        localStorage.setItem("accessToken", data.accessToken);
-      }
-
       toast.success(data.message || "Login successful!");
       router.replace("/dashboard");
     } catch (err: any) {
