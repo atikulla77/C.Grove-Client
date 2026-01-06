@@ -1,17 +1,19 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get("accessToken")?.value;
+  const { pathname } = request.nextUrl;
 
   // Protect dashboard routes
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (pathname.startsWith("/dashboard")) {
     if (!accessToken) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
-  // If Admin Already Login
-  if (request.nextUrl.pathname.startsWith("/login")) {
+
+  // Redirect to dashboard if already logged in
+  if (pathname === "/login") {
     if (accessToken) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
@@ -21,5 +23,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/login"],
 };
