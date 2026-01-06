@@ -8,33 +8,27 @@ import { LuGitPullRequestCreateArrow } from "react-icons/lu";
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogout = async () => {
-    setIsLoggingOut(true);
-    
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      
-      // Call API to clear cookies server-side
       const response = await fetch(`${API_URL}/api/v1/admin/logout`, {
-        method: 'POST',
-        credentials: 'include', // Send cookies to API
+        method: "POST",
+        credentials: "include",
       });
 
-      console.log('Logout response:', response.status);
+      console.log("Logout response:", response.status);
 
-      // Redirect regardless of API response
-      // Use window.location for hard refresh to clear all state
-      window.location.href = '/login';
-      
+      window.location.href = "/login";
     } catch (error) {
-      console.error('Logout error:', error);
-      
+      console.error("Logout error:", error);
+
       // Still redirect even if API call fails
-      window.location.href = '/login';
+      window.location.href = "/login";
     } finally {
-      setIsLoggingOut(false);
+      // setIsLoggingOut(false);
     }
   };
   const isActive = (path: string) => pathname === path;
@@ -84,12 +78,19 @@ const [isLoggingOut, setIsLoggingOut] = useState(false);
             </button>
 
             <button
-              onClick={handleLogout}
+              onClick={() => setIsModalOpen(true)}
               className="flex items-center space-x-2 h-9 px-4 py-2 border border-slate-300 hover:bg-slate-100 justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
             >
               <FiLogOut size={16} />
               <span> Logout </span>
             </button>
+
+            <LogoutConfirmModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onConfirm={handleLogout}
+              loading={loading}
+            />
           </div>
         </div>
       </div>
@@ -98,3 +99,104 @@ const [isLoggingOut, setIsLoggingOut] = useState(false);
 };
 
 export default Navbar;
+
+interface LogoutConfirmModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  loading: boolean;
+}
+
+const LogoutConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  loading,
+}: LogoutConfirmModalProps) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in zoom-in-95 duration-200">
+        {/* Icon */}
+        <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-red-100 mb-4">
+          <svg
+            className="h-7 w-7 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
+        </div>
+
+        {/* Content */}
+        <div className="text-center">
+          <h3 className="text-2xl font-semibold text-slate-900 mb-2">
+            Logout Confirmation
+          </h3>
+          <p className="text-slate-600 text-sm mb-6">
+            Are you sure you want to logout? You'll need to login again to
+            access your dashboard.
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-3">
+          <button
+            onClick={onClose}
+            disabled={loading}
+            className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={loading}
+            className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <>
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Logging out...
+              </>
+            ) : (
+              "Yes, Logout"
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
