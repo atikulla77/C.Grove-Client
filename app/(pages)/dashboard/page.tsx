@@ -41,95 +41,95 @@ const Dashboard = () => {
   ];
   const stats = [
     {
-      label: 'Total Designs',
-      value: '156',
-      change: '+12 this week',
+      label: "Total Designs",
+      value: "156",
+      change: "+12 this week",
       icon: IoColorPaletteOutline,
-      gradient: 'from-blue-500 to-cyan-500',
+      gradient: "from-blue-500 to-cyan-500",
     },
     {
-      label: 'Active Projects',
-      value: '8',
-      change: '3 in progress',
+      label: "Active Projects",
+      value: "8",
+      change: "3 in progress",
       icon: FaRegFolderOpen,
-      gradient: 'from-purple-500 to-pink-500',
+      gradient: "from-purple-500 to-pink-500",
     },
     {
-      label: 'Total Views',
-      value: '12.4K',
-      change: '+2.3K this month',
+      label: "Total Views",
+      value: "12.4K",
+      change: "+2.3K this month",
       icon: FaRegEye,
-      gradient: 'from-orange-500 to-red-500',
+      gradient: "from-orange-500 to-red-500",
     },
     {
-      label: 'Downloads',
-      value: '847',
-      change: '+127 this week',
+      label: "Downloads",
+      value: "847",
+      change: "+127 this week",
       icon: FiDownload,
-      gradient: 'from-green-500 to-emerald-500',
+      gradient: "from-green-500 to-emerald-500",
     },
   ];
   return (
-    <main className="container mx-auto px-6 py-8">
-      {/* Welcome Section */}
-      <section className="mb-12">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
-          <div>
-            <h2 className="text-4xl font-bold text-foreground mb-2">
-              Welcome back!
-            </h2>
-            <p className="text-lg text-[#00002D]">
-              Here's what's happening with your designs today.
-            </p>
+      <main className="container mx-auto px-6 py-8">
+        {/* Welcome Section */}
+        <section className="mb-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+            <div>
+              <h2 className="text-4xl font-bold text-foreground mb-2">
+                Welcome back!
+              </h2>
+              <p className="text-lg text-[#00002D]">
+                Here's what's happening with your designs today.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 text-[#00002D]">
+              <FiClock className="w-4.5 h-4.5" />
+              <span className="text-sm ">
+                {currentTime.toLocaleString("en-US", {
+                  weekday: "long",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-[#00002D]">
-            <FiClock className="w-4.5 h-4.5" />
-            <span className="text-sm ">
-              {currentTime.toLocaleString("en-US", {
-                weekday: "long",
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          </div>
-        </div>
 
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {quickActions.map((action, index) => {
-            const Icon = action.icon;
-            return (
-              <div
-                key={index}
-                className="rounded-xl border border-[#00000024] text-[#00000A] shadow cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                onClick={action.onClick}
-              >
-                <div className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-[#00000A] text-white">
-                      <Icon className="w-6 h-6" />
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {quickActions.map((action, index) => {
+              const Icon = action.icon;
+              return (
+                <div
+                  key={index}
+                  className="rounded-xl border border-[#00000024] text-[#00000A] shadow cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                  onClick={action.onClick}
+                >
+                  <div className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-xl bg-[#00000A] text-white">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-[#00000A] mb-1">
+                          {action.label}
+                        </h3>
+                        <p className="text-sm text-[#00002d9c]">
+                          {action.description}
+                        </p>
+                      </div>
+                      <FaArrowRight className="w-4 text-[#00002d9c]" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-[#00000A] mb-1">
-                        {action.label}
-                      </h3>
-                      <p className="text-sm text-[#00002d9c]">
-                        {action.description}
-                      </p>
-                    </div>
-                    <FaArrowRight className="w-4 text-[#00002d9c]" />
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+              );
+            })}
+          </div>
+        </section>
 
-      {/* Stats Grid */}
-      <section className="mb-12">
+        {/* Stats Grid */}
+        <section className="mb-12">
           <h3 className="text-2xl font-bold text-foreground mb-6">Overview</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, index) => {
@@ -154,9 +154,7 @@ const Dashboard = () => {
                       <p className="text-3xl font-bold text-[#00000A] mb-1">
                         {stat.value}
                       </p>
-                      <p className="text-xs text-[#00002d9c]">
-                        {stat.change}
-                      </p>
+                      <p className="text-xs text-[#00002d9c]">{stat.change}</p>
                     </div>
                   </div>
                 </div>
@@ -165,8 +163,8 @@ const Dashboard = () => {
           </div>
         </section>
 
-      {/* Recent Designs */}
-      {/* <section>
+        {/* Recent Designs */}
+        {/* <section>
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-foreground">
               Recent Designs
@@ -227,7 +225,7 @@ const Dashboard = () => {
             ))}
           </div>
         </section> */}
-    </main>
+      </main>
   );
 };
 

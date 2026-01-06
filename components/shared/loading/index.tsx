@@ -2,7 +2,7 @@ import { SpinnerCircularFixed } from "spinners-react";
 
 const Loading = () => {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="flex justify-center items-center">
       <SpinnerCircularFixed
         size={60}
         thickness={100}

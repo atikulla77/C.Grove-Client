@@ -7,11 +7,11 @@ import { toast } from "sonner";
 const Login = () => {
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -23,8 +23,8 @@ const Login = () => {
             "Cache-Control": "no-cache",
           },
         });
-
         if (res.ok) {
+          setIsAuthenticated(true);
           router.replace("/dashboard");
           return;
         }
@@ -34,12 +34,17 @@ const Login = () => {
         setCheckingAuth(false);
       }
     };
-
     checkLoggedIn();
   }, [API_URL, router]);
 
-  if (checkingAuth) {
-    return <Loading />;
+  // Don't render anything while checking or if authenticated
+  if (checkingAuth || isAuthenticated) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <Loading />
+        <p className="mt-4 text-sm text-gray-600">Checking authentication...</p>
+      </div>
+    );
   }
 
   const handleLogin = async (e: React.FormEvent) => {

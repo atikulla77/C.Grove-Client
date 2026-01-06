@@ -1,4 +1,3 @@
-
 "use client";
 import DNavbar from "@/components/pages/dashboard/DNavbar";
 import Loading from "@/components/shared/loading";
@@ -14,23 +13,17 @@ export default function DashboardLayoutDebug({
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState<any>(null);
-  const [error, setError] = useState<string>("");
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
-      console.log("=== Dashboard Auth Check ===");
-      console.log("API_URL:", API_URL);
-      
       if (!API_URL) {
-        setError("API_URL not configured");
-        console.error("NEXT_PUBLIC_API_URL is not set!");
-        setLoading(false);
+        setShouldRedirect(true);
+        router.replace("/login");
         return;
       }
 
       try {
-        console.log("Fetching:", `${API_URL}/api/v1/admin/me`);
-        
         const res = await fetch(`${API_URL}/api/v1/admin/me`, {
           method: "GET",
           credentials: "include",
@@ -40,56 +33,34 @@ export default function DashboardLayoutDebug({
           },
         });
 
-        console.log("Response status:", res.status);
-        console.log("Response ok:", res.ok);
-
         if (!res.ok) {
-          console.log("Not authenticated, redirecting to login");
+          setShouldRedirect(true);
           router.replace("/login");
           return;
         }
 
         const data = await res.json();
-        console.log("Admin data:", data);
-
         if (data.success && data.admin) {
           setAdmin(data.admin);
+          setLoading(false);
         } else {
-          setError("Invalid response format");
+          setShouldRedirect(true);
           router.replace("/login");
         }
       } catch (error: any) {
-        console.error("=== Auth Check Error ===");
-        console.error("Error:", error);
-        console.error("Error message:", error.message);
-        console.error("Error stack:", error.stack);
-        setError(error.message);
+        setShouldRedirect(true);
         router.replace("/login");
-      } finally {
-        setLoading(false);
       }
     };
-
     checkAuth();
-  }, []);
+  }, [API_URL, router]);
 
-  if (loading) {
+  // Don't render anything while loading or redirecting
+  if (loading || shouldRedirect || !admin) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <Loading />
         <p className="mt-4 text-sm text-gray-600">Checking authentication...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-          <h2 className="text-red-800 font-semibold mb-2">Error</h2>
-          <p className="text-red-600 text-sm">{error}</p>
-          <p className="text-xs text-gray-500 mt-2">Check console for details</p>
-        </div>
       </div>
     );
   }
