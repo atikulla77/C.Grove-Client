@@ -1,20 +1,41 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { FiLayout, FiLogOut, FiUser } from "react-icons/fi";
 import { LuGitPullRequestCreateArrow } from "react-icons/lu";
 
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
-    await fetch(`${API_URL}/api/v1/admin/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-    router.push("/login");
+    setIsLoggingOut(true);
+    
+    try {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      
+      // Call API to clear cookies server-side
+      const response = await fetch(`${API_URL}/api/v1/admin/logout`, {
+        method: 'POST',
+        credentials: 'include', // Send cookies to API
+      });
+
+      console.log('Logout response:', response.status);
+
+      // Redirect regardless of API response
+      // Use window.location for hard refresh to clear all state
+      window.location.href = '/login';
+      
+    } catch (error) {
+      console.error('Logout error:', error);
+      
+      // Still redirect even if API call fails
+      window.location.href = '/login';
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
   const isActive = (path: string) => pathname === path;
 
@@ -67,7 +88,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 h-9 px-4 py-2 border border-slate-300 hover:bg-slate-100 justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
             >
               <FiLogOut size={16} />
-              <span>Logout</span>
+              <span> Logout </span>
             </button>
           </div>
         </div>
