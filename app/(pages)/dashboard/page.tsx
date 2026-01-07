@@ -103,7 +103,7 @@ const Dashboard = () => {
               return (
                 <div
                   key={index}
-                  className="rounded-xl border border-[#00000024] text-[#00000A] shadow cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                  className="rounded-xl border border-[#e5e5e5] text-[#00000A] shadow cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                   onClick={action.onClick}
                 >
                   <div className="p-6">
@@ -137,7 +137,7 @@ const Dashboard = () => {
               return (
                 <div
                   key={index}
-                  className="rounded-xl border border-[#00000024] text-[#00000A] shadow hover:shadow-lg transition-shadow"
+                  className="rounded-xl border border-[#e5e5e5] text-[#00000A] shadow hover:shadow-lg transition-shadow"
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">

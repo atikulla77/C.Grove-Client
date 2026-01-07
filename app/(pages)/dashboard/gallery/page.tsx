@@ -31,11 +31,11 @@ const Gallery = () => {
             placeholder="Search designs by title or description..."
             // value={searchQuery}
             // onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-12 border-[#00000024] border focus:border-slate-700 bg-transparent  flex w-full rounded-md px-3 py-1 md:text-sm text-base shadow-sm transition-colors focus:outline-none focus:ring-0 disabled:opacity-50 "
+            className="pl-10 h-12 border-[#e5e5e5] border focus:border-slate-700 bg-transparent  flex w-full rounded-md px-3 py-1 md:text-sm text-base transition-colors focus:outline-none focus:ring-0 disabled:opacity-50 shadow-[0px_1px_1px_0px_#e5e5e5e0]"
           />
         </div>
         <div
-          className="text-center py-12 bg-white rounded-lg border border-slate-200"
+          className="text-center py-12 bg-white rounded-lg border border-[#e5e5e5]"
         >
           <p className="text-slate-600">
             {searchQuery

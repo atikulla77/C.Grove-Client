@@ -96,7 +96,7 @@ const Login = () => {
               placeholder={"Enter Your Email Address"}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="flex h-11 w-full rounded-md border border-[#00000024] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
+              className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
             />
           </div>
 
@@ -111,7 +111,7 @@ const Login = () => {
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
-              className="flex h-11 w-full rounded-md border border-[#00000024] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
+              className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
             />
           </div>
 

@@ -2,69 +2,111 @@
 import DNavbar from "@/components/pages/dashboard/DNavbar";
 import Loading from "@/components/shared/loading";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const CHECK_INTERVAL = 10_000; // 30 seconds
 
 export default function DashboardLayoutDebug({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
+   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState<any>(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      if (!API_URL) {
-        setShouldRedirect(true);
-        router.replace("/login");
-        return;
-      }
+  const isRefreshing = useRef(false);
 
-      try {
-        const res = await fetch(`${API_URL}/api/v1/admin/me`, {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+  const redirectToLogin = () => {
+    setShouldRedirect(true);
+    router.replace("/login");
+  };
 
-        if (!res.ok) {
-          setShouldRedirect(true);
-          router.replace("/login");
+  const refreshToken = async () => {
+    if (!API_URL || isRefreshing.current) return false;
+
+    isRefreshing.current = true;
+
+    try {
+      const res = await fetch(`${API_URL}/api/v1/admin/refresh`, {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      return res.ok;
+    } catch {
+      return false;
+    } finally {
+      isRefreshing.current = false;
+    }
+  };
+
+  const checkAuth = async () => {
+    if (!API_URL) {
+      redirectToLogin();
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_URL}/api/v1/admin/me`, {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      // ✅ ACCESS TOKEN EXPIRED
+      if (res.status === 401) {
+        const refreshed = await refreshToken();
+
+        if (!refreshed) {
+          redirectToLogin();
           return;
         }
 
-        const data = await res.json();
-        if (data.success && data.admin) {
-          setAdmin(data.admin);
-          setLoading(false);
-        } else {
-          setShouldRedirect(true);
-          router.replace("/login");
-        }
-      } catch (error: any) {
-        setShouldRedirect(true);
-        router.replace("/login");
+        // 🔁 retry /me after refresh
+        return checkAuth();
       }
-    };
-    checkAuth();
-  }, [API_URL, router]);
 
-  // Don't render anything while loading or redirecting
+      if (!res.ok) {
+        redirectToLogin();
+        return;
+      }
+
+      const data = await res.json();
+
+      if (data?.success && data?.admin) {
+        setAdmin(data.admin);
+        setLoading(false);
+      } else {
+        redirectToLogin();
+      }
+    } catch {
+      redirectToLogin();
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+    const interval = setInterval(checkAuth, CHECK_INTERVAL);
+    return () => clearInterval(interval);
+  }, []);
+
+  // 🔒 BLOCK UI FLASH
   if (loading || shouldRedirect || !admin) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <Loading />
-        <p className="mt-4 text-sm text-gray-600">Checking authentication...</p>
+        <p className="mt-4 text-sm text-gray-600">
+          Checking authentication...
+        </p>
       </div>
     );
   }
-
   return (
     <div className="w-full bg-slate-50 min-h-screen">
       <DNavbar />
