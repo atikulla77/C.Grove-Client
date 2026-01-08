@@ -1,7 +1,9 @@
 "use client";
 import Loading from "@/components/shared/loading";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa6";
 import { toast } from "sonner";
 
 const Login = () => {
@@ -123,6 +125,17 @@ const Login = () => {
             >
               {loading ? "Logging in..." : "Login"}
             </button>
+          </div>
+
+
+          {/* View All Button */}
+          <div className="flex justify-center text-center mt-3">
+            <Link href="/">
+              <button className="text-[13px] text-gray-800 hover:text-gray-600 group flex items-center cursor-pointer transition-colors">
+                <FaArrowLeft className="w-3.75 mr-2 text-gray-600 group-hover:text-gray-500" />
+                Back To Home Page
+              </button>
+            </Link>
           </div>
         </form>
       </div>
