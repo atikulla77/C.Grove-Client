@@ -70,7 +70,7 @@ const Dashboard = () => {
     },
   ];
   return (
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-2 py-8">
         {/* Welcome Section */}
         <section className="mb-12">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
