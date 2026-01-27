@@ -8,6 +8,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 export default function Home() {
   const { profile, skills, bookMockups, testimonials } = mockData;
+  const firstEightBooks = bookMockups.slice(0, 6);
   const [hoveredBook, setHoveredBook] = useState();
   const handleMockupClick = (amazonLink: any) => {
     window.open(amazonLink, "_blank", "noopener,noreferrer");
@@ -76,7 +77,7 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       {/* <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/">
             <div className="flex items-center select-none">
               <div className="flex items-center text-black tracking-[-0.02em]">
@@ -139,7 +140,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="container mx-auto text-center">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
             {profile.name}
           </h1>
@@ -169,7 +170,7 @@ export default function Home() {
 
       {/* About Section */}
       {/* <section id="about" className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <h2 className="text-5xl font-bold mb-16 text-center">About Me</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
@@ -198,7 +199,7 @@ export default function Home() {
       </section> */}
       {/* About Section - Unique Layout */}
       <section id="about" className="py-20 px-4 md:px-8 lg:px-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <div className="grid md:grid-cols-5 gap-12">
             <div className="md:col-span-2">
               <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
@@ -243,7 +244,7 @@ export default function Home() {
 
       {/* Portfolio Section */}
       {/* <section id="portfolio" className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <h2 className="text-5xl font-bold mb-4 text-center">Portfolio</h2>
           <p className="text-lg text-gray-600 text-center mb-16 max-w-2xl mx-auto">
             Explore my collection of book cover mockups. Click any design to
@@ -288,7 +289,7 @@ export default function Home() {
       </section> */}
       {/* Gallery Section - Asymmetric Grid */}
       <section id="portfolio" className="py-20 px-4 md:px-8 lg:px-16">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <div className="text-center mb-16">
             <span className="text-sm font-semibold tracking-wider text-gray-600 uppercase">
               My Work
@@ -303,7 +304,7 @@ export default function Home() {
 
           {/* Uniform Grid Layout - All Same Size */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {bookMockups.map((book) => {
+            {firstEightBooks.map((book) => {
               return (
                 <Link
                   key={book.id}
@@ -326,13 +327,13 @@ export default function Home() {
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 className="text-2xl font-bold mb-2">
+                        <h3 className="text-xl font-bold mb-2">
                           {book.title}
                         </h3>
-                        <p className="text-sm text-gray-200 mb-4">
+                        <p className="text-sm text-gray-200 mb-3">
                           {book.description}
                         </p>
-                        <div className="flex items-center gap-2 text-sm font-semibold">
+                        <div className="flex items-center gap-2 text-sm font-medium">
                           <span>View on Amazon</span>
                           <ExternalLink className="w-4 h-4" />
                         </div>
@@ -363,7 +364,7 @@ export default function Home() {
 
       {/* Testimonials Section */}
       {/* <section id="testimonials" className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <h2 className="text-5xl font-bold mb-4 text-center">
             What Clients Say
           </h2>
@@ -402,7 +403,7 @@ export default function Home() {
         </div>
       </section> */}
       <section id="testimonials" className="py-20 px-4 md:px-8 lg:px-16 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <div className="text-center mb-16">
             <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">Testimonials</span>
             <h2 className="text-5xl md:text-6xl font-bold mt-4 mb-6">
@@ -471,7 +472,7 @@ export default function Home() {
         </div>
       </section> */}
       <section id="contact" className="py-20 px-4 md:px-8 lg:px-16">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="text-sm font-semibold tracking-wider text-gray-600 uppercase">Contact</span>
@@ -527,7 +528,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-12 px-6 bg-black text-white">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="container mx-auto text-center">
           <h3 className="text-lg font-semibold mb-2">{profile.name}</h3>
           <p className="text-gray-400 mb-4">{profile.title}</p>
           <p className="text-sm text-gray-500">
@@ -544,7 +545,7 @@ export default function Home() {
 const NavBar = () => {
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/">
             <div className="flex items-center select-none">
               <div className="flex items-center text-black tracking-[-0.02em]">

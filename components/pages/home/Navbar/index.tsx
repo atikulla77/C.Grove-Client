@@ -8,20 +8,33 @@ const NavBar = () => {
   const pathname = usePathname();
 
   const [isSticky, setIsSticky] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsSticky(true); // sticky slides in
-      } else {
-        setIsSticky(false); // sticky slides up
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-  });
+useEffect(() => {
+  const handleScroll = () => {
+    setIsSticky(window.scrollY > 10);
+  };
+
+  // ✅ Run once on mount (page reload fix)
+  handleScroll();
+
+  window.addEventListener("scroll", handleScroll);
+
+  // ✅ Cleanup (important)
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b ${isSticky? "border-gray-200":"border-white/80"}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header
+      className={`fixed top-0 left-0 right-0 ${
+        pathname === "/gallery" ? "" : "bg-white/80 backdrop-blur-md"
+      } z-50 border-b ${
+        isSticky
+          ? pathname === "/gallery"
+            ? "border-gray-200 bg-white"
+            : "border-gray-200"
+          : "border-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center select-none">
             <div className="flex items-center text-black tracking-[-0.02em]">
@@ -57,7 +70,7 @@ const NavBar = () => {
             <span
               className={`text-sm font-medium ${
                 pathname === "/gallery"
-                  ? "pb-0.5 border-b-2 border-[#101828a3] text-gray-900"
+                  ? "pb-0.5 border-b-2 border-[#101828a3] text-black"
                   : "hover:text-gray-600"
               } transition-colors`}
             >

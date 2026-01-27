@@ -33,10 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} `}>
-        <div className={`${pathname === "/login" && "hidden"}`}>
+        <div className={`${pathname === "/" || pathname === "/gallery" ? "" :"hidden"}`}>
           <NavBar />
         </div>
-        <div className={`${pathname === "/login" ? "" : "pt-15.75"}`}>
+        <div className={`${pathname === "/" && "pt-15.75"}`}>
           {children}
         </div>
 

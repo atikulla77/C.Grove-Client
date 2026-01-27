@@ -35,7 +35,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full bg-white border-b border-[#e5e5e5] font-Inter fixed top-0 left-0 z-9999">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-2">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-semibold text-slate-900 select-none cursor-pointer">
             <Link href={"/dashboard"}>Admin Dashboard</Link>
