@@ -367,110 +367,145 @@ const EditMockupModal = ({
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl sm:max-w-150 w-full p-6 animate-in zoom-in-95 duration-200">
-        {/* Icon */}
-        <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-[#02bb022c] mb-4">
-          <MdRebaseEdit className="text-[25px] text-[#02bb02]" />
+      <div className="relative bg-white rounded-2xl shadow-2xl sm:max-w-213.75 w-full flex justify-between p-6 animate-in zoom-in-95 duration-200">
+        <div className="sm:max-w-112.5 w-full">
+          {/* Icon */}
+          <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-[#02bb022c] mb-4">
+            <MdRebaseEdit className="text-[25px] text-[#02bb02]" />
+          </div>
+
+          {/* Content */}
+          <form onSubmit={onConfirm} className="space-y-3.5">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Title
+              </p>
+              <input
+                type="text"
+                value={title}
+                placeholder={"Title"}
+                required
+                onChange={(e) => setTitle(e.target.value)}
+                className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
+              />
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Description
+              </p>
+
+              <textarea
+                value={description}
+                placeholder={"Description"}
+                required
+                onChange={(e) => setDescription(e.target.value)}
+                className="flex min-h-20 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-2 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base scrollbar-textarea-custom"
+              />
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Image URL
+              </p>
+              <input
+                type="text"
+                value={imageURL}
+                placeholder={"Image URL"}
+                required
+                onChange={(e) => setImageURL(e.target.value)}
+                className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
+              />
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Mockup Link
+              </p>
+              <input
+                type="text"
+                value={mockupLink}
+                placeholder={"Mockup Link"}
+                required
+                onChange={(e) => setMockupLink(e.target.value)}
+                className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
+              />
+            </div>
+            {/* button */}
+            <div className="flex gap-3 pt-2.5 pb-1">
+              <button
+                onClick={onClose}
+                disabled={loading}
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-[#02bb02e8] hover:bg-[#02bb02] rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Updating...
+                  </>
+                ) : (
+                  "Yes, Update"
+                )}
+              </button>
+            </div>
+          </form>
         </div>
 
-        {/* Content */}
-        <form onSubmit={onConfirm} className="space-y-3.5">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Title
-            </p>
-            <input
-              type="text"
-              value={title}
-              placeholder={"Title"}
-              required
-              onChange={(e) => setTitle(e.target.value)}
-              className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
-            />
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Description
-            </p>
-            <input
-              type="text"
-              value={description}
-              placeholder={"Description"}
-              required
-              onChange={(e) => setDescription(e.target.value)}
-              className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
-            />
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Image URL
-            </p>
-            <input
-              type="text"
-              value={imageURL}
-              placeholder={"Image URL"}
-              required
-              onChange={(e) => setImageURL(e.target.value)}
-              className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
-            />
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Mockup Link
-            </p>
-            <input
-              type="text"
-              value={mockupLink}
-              placeholder={"Mockup Link"}
-              required
-              onChange={(e) => setMockupLink(e.target.value)}
-              className="flex h-11 w-full rounded-md border border-[#e5e5e5] focus:border-slate-700 bg-transparent px-3 py-1 shadow-[0_1px_2px_0_#0000000d] focus:outline-none focus:ring-0 ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base"
-            />
-          </div>
-          {/* button */}
-          <div className="flex gap-3 pt-2.5 pb-1">
-            <button
-              onClick={onClose}
-              disabled={loading}
-              className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        <div className="w-[320px] flex items-center">
+          <div
+            className={`h-fit group overflow-hidden transform rounded-xl border border-[#e5e5e5] bg-[#ffffff] text-[#0a0a0a] shadow relative transition-all duration-300`}
+          >
+            <div className="relative overflow-hidden aspect-2/3 bg-gray-100">
+              <Image
+                src={editMockupInfo.image}
+                alt={title}
+                width={1800}
+                height={2700}
+                className="w-full h-full object-cover transition-transform duration-500 select-none"
+              />
+            </div>
+            <div
+              className={`absolute inset-0 w-full bg-linear-to-t from-black/50 via-black/0 to-transparent`}
             >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-[#02bb02e8] hover:bg-[#02bb02] rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Updating...
-                </>
-              ) : (
-                "Yes, Update"
-              )}
-            </button>
+              <div className="absolute left-0 right-0 bottom-0 w-full p-4">
+                <h3 className="text-[16px] text-white font-semibold mb-1">
+                  {title}
+                </h3>
+                <p className="text-[13px] text-gray-200 leading-4 mb-1">
+                  {description}
+                </p>
+                <Link href={mockupLink} target="_blank">
+                  <p className="text-[13px] text-blue-400 hover:underline leading-4">
+                    {mockupLink}
+                  </p>
+                </Link>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
@@ -530,11 +565,14 @@ const DeleteMockupModal = ({
             Delete Mockup Confirmation
           </h3>
           <p className="text-slate-600 text-sm mb-6 ">
-            Are you sure you want to delete {deleteMockupInfo.map((dtitle) => (
+            Are you sure you want to delete{" "}
+            {deleteMockupInfo.map((dtitle) => (
               <span key={dtitle.id} className="text-red-600 font-medium ">
-                {dtitle.title}{deleteMockupInfo.length === dtitle.id ?"" :", "}
+                {dtitle.title}
+                {deleteMockupInfo.length === dtitle.id ? "" : ", "}
               </span>
-            ))} mockup
+            ))}{" "}
+            mockup
             {deleteMockupInfo.length > 1 ? "'s" : ""}?
           </p>
         </div>

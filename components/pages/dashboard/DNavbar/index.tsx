@@ -1,15 +1,32 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiLayout, FiLogOut, FiUser } from "react-icons/fi";
-import { LuGitPullRequestCreateArrow } from "react-icons/lu";
+import { LuComponent, LuGitPullRequestCreateArrow } from "react-icons/lu";
+import { RxComponentInstance } from "react-icons/rx";
+import { VscDiffMultiple, VscDiffSingle } from "react-icons/vsc";
 
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 10);
+    };
+
+    // ✅ Run once on mount (page reload fix)
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    // ✅ Cleanup (important)
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -34,25 +51,56 @@ const Navbar = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="w-full bg-white border-b border-[#e5e5e5] font-Inter fixed top-0 left-0 z-9999">
+    <nav
+      className={`w-full ${isSticky ? "bg-white" : "bg-[#f8fafc]"} border-b border-[#e5e5e5] font-Inter fixed top-0 left-0 z-9999`}
+    >
       <div className="container mx-auto px-2">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-semibold text-slate-900 select-none cursor-pointer">
             <Link href={"/dashboard"}>Admin Dashboard</Link>
           </h1>
 
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/dashboard/create")}
-              className={`flex items-center space-x-2 ${
-                isActive("/dashboard/create")
-                  ? "bg-slate-100 text-slate-900"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-              } h-9 px-4 py-2 inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer`}
-            >
-              <LuGitPullRequestCreateArrow size={18} />
-              <span>Create</span>
-            </button>
+          <div className="h-full flex items-center gap-4">
+            <div className="w-fit h-full flex items-center group relative">
+              <button
+                className={`flex items-center space-x-2 ${
+                  isActive("/dashboard/create/single") ||
+                  isActive("/dashboard/create/multiple")
+                    ? "bg-slate-100 text-slate-900"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 group-hover:text-slate-900 group-hover:bg-slate-100"
+                } h-9 px-4 py-2 inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-default`}
+              >
+                <LuGitPullRequestCreateArrow size={18} />
+                <span>Create</span>
+              </button>
+              <div
+                className={`absolute left-0 group-hover:top-16.25 top-9 w-fit p-1 space-y-1 ${isSticky ? "bg-white" : "bg-[#f8fafc]"}  flex-col justify-start rounded-b-md shadow-sm group-hover:flex hidden transition-all duration-1000`}
+              >
+                <button
+                  onClick={() => router.push("/dashboard/create/single")}
+                  className={`flex items-center space-x-2 ${
+                    isActive("/dashboard/create/single")
+                      ? "bg-slate-100 text-slate-900"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                  } h-9 px-4 py-2 inline-flex items-center justify-start gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer relative`}
+                >
+                  <RxComponentInstance size={18} />
+                  <span>Single</span>
+                </button>
+                <button
+                  onClick={() => router.push("/dashboard/create/multiple")}
+                  className={`flex items-center space-x-2 ${
+                    isActive("/dashboard/create/multiple")
+                      ? "bg-slate-100 text-slate-900"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                  } h-9 px-4 py-2 inline-flex items-center justify-start gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer relative`}
+                >
+                  <LuComponent size={18} />
+                  <span>Multiple</span>
+                </button>
+              </div>
+            </div>
+
             <button
               onClick={() => router.push("/dashboard/gallery")}
               className={`flex items-center space-x-2 ${
@@ -113,6 +161,19 @@ const LogoutConfirmModal = ({
   onConfirm,
   loading,
 }: LogoutConfirmModalProps) => {
+  // scroll bar hidden
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup (important)
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
   if (!isOpen) return null;
 
   return (

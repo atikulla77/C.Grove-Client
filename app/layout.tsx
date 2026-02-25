@@ -1,7 +1,6 @@
 "use client";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import { Inter } from "next/font/google";
+import { Poppins, Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import NavBar from "@/components/pages/home/Navbar";
@@ -17,6 +16,11 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
+});
+
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  weight: ['400', '500'],
 });
 
 // export const metadata: Metadata = {

@@ -8,19 +8,19 @@ const NavBar = () => {
   const pathname = usePathname();
 
   const [isSticky, setIsSticky] = useState(false);
-useEffect(() => {
-  const handleScroll = () => {
-    setIsSticky(window.scrollY > 10);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 10);
+    };
 
-  // ✅ Run once on mount (page reload fix)
-  handleScroll();
+    // ✅ Run once on mount (page reload fix)
+    handleScroll();
 
-  window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-  // ✅ Cleanup (important)
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
+    // ✅ Cleanup (important)
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
@@ -56,13 +56,13 @@ useEffect(() => {
         <nav className="hidden md:flex items-center gap-8">
           <Link
             href={"/#about"}
-            className="text-sm font-medium hover:text-gray-600 transition-colors"
+            className="text-sm font-medium hover:text-black text-gray-700 transition-colors"
           >
             About
           </Link>
           <Link
             href={"/#portfolio"}
-            className="text-sm font-medium hover:text-gray-600 transition-colors"
+            className="text-sm font-medium hover:text-black text-gray-700 transition-colors"
           >
             Portfolio
           </Link>
@@ -71,7 +71,7 @@ useEffect(() => {
               className={`text-sm font-medium ${
                 pathname === "/gallery"
                   ? "pb-0.5 border-b-2 border-[#101828a3] text-black"
-                  : "hover:text-gray-600"
+                  : "hover:text-black text-gray-700"
               } transition-colors`}
             >
               Gallery
@@ -79,20 +79,20 @@ useEffect(() => {
           </Link>
           <Link
             href={"/#testimonials"}
-            className="text-sm font-medium hover:text-gray-600 transition-colors"
+            className="text-sm font-medium hover:text-black text-gray-700 transition-colors"
           >
             Testimonials
           </Link>
           <Link
             href={"/#contact"}
-            className="text-sm font-medium hover:text-gray-600 transition-colors"
+            className="text-sm font-medium hover:text-black text-gray-700 transition-colors"
           >
             Contact
           </Link>
           <Link
             href={"/login"}
             target="_blank"
-            className="text-sm font-medium hover:text-gray-600 transition-colors"
+            className="text-sm font-medium hover:text-black text-gray-700 transition-colors"
           >
             Admin
           </Link>

@@ -9,3 +9,65 @@
 body{
   font-family: "Inter", sans-serif;
 }
+
+/* Custom scrollbar */
+.scrollbar-textarea-custom::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-textarea-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-textarea-custom::-webkit-scrollbar-thumb {
+  background-color: #7c7c7c; /* green */
+  border-radius: 999px;
+}
+
+.scrollbar-textarea-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #686868;
+}
+
+/* Firefox */
+.scrollbar-textarea-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #7c7c7c transparent;
+}
+
+
+
+
+
+
+
+
+
+
+.code-textarea {
+  scrollbar-width: thin;                 /* Firefox */
+  scrollbar-color: #424242 #1e1e1e;
+  tab-size: 2;
+}
+
+.code-textarea::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.code-textarea::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.code-textarea::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 6px;
+  border: 2px solid #1e1e1e;
+}
+
+.code-textarea::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+
+.code-textarea::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}

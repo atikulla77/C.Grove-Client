@@ -30,7 +30,7 @@ const Gallery = () => {
               Explore our entire library of professional book cover mockups.
               Click any mockup to view on Amazon KDP.
             </p>
-            <div className="inline-block text-[12px] px-6 py-[10px] bg-gray-900 text-white rounded-full font-medium">
+            <div className="inline-block text-[12px] px-6 py-2.5 bg-gray-900 text-white rounded-full font-medium">
               {25} Mockups Available
             </div>
           </div>
